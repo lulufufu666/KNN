@@ -1,57 +1,35 @@
-# Replace 'D:\\train.csv' with the actual path to the dataset
-import pandas as pd
-from sklearn.metrics import roc_auc_score, classification_report
-from sklearn.model_selection import train_test_split
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.preprocessing import StandardScaler
+# KNN Model Training and Evaluation
 
-# 读取数据集的第一个块
-chunk_size = 1000  # 每次读取的行数
-data_chunks = pd.read_csv('D:\\train.csv', chunksize=chunk_size)
-first_chunk = next(data_chunks)
-first_chunk.fillna(first_chunk.mean(), inplace=True)
+This project demonstrates how to train and evaluate a dataset using the K-Nearest Neighbors (KNN) algorithm.
 
-# 分割特征和目标变量
-X = first_chunk.drop('target', axis=1)
-y = first_chunk['target']
+## Installation and Dependencies
 
-# 将数据集分为训练集和测试集
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=10)
+Please ensure that the following libraries are installed:
 
-# 创建标准化器
-scaler = StandardScaler()
+- pandas
+- scikit-learn
 
-# 对第一分块训练集去调用fit方法对标准化器进行适配训练。
-scaler.fit(X_train)
+You can install the dependencies using the following command:
 
-# 标准化测试集
-X_test = scaler.transform(X_test)
+```
+pip install pandas scikit-learn
+```
 
-# 初始化 KNN 模型
-knn = KNeighborsClassifier(n_neighbors=15)
-# 逐块读取和训练
-for chunk in data_chunks:
+## Usage
 
-    # 分割特征和目标变量
-    chunk.fillna(chunk.mean(), inplace=True)
-    X = chunk.drop('target', axis=1)
-    y = chunk['target']
+1. Prepare the dataset:
+    - Place the dataset file (train.csv) in the same directory as the code.
+2. Execute the code:
+    - Run the code file (train.py).
+3. View the results:
+    - The output will be divided into two parts:
+        - Accuracy Score: The classification accuracy of the model on the test set.
+        - AUC Score: The area under the ROC curve of the model on the test set.
 
-    # 标准化每一分块的特征训练集
-    X = scaler.fit_transform(X)
+## Parameter Description
 
-    # 拟合 KNN 模型
-    knn.fit(X, y)
+You can customize the following parameters in the code:
 
-
-# 在测试集上进行预测
-y_pred = knn.predict(X_test)
-
-# 在测试集上评估模型性能
-accuracy = round(knn.score(X_test, y_test), 5)
-print("Accuracy on testing set: {:.3f}".format(roc_auc_score(y_test, y_pred)))
-# 打印模型准确度
-print("Accuracy:", accuracy)
-print("classification report:\n", classification_report(y_test, knn.predict(X_test),
-                                                        target_names=["非5g", "5g"]))
-# ... [Add the remaining code here]
+- chunk_size: The number of rows to be read from the dataset at each iteration.
+- test_size: The proportion of the test set.
+- random_state: The random seed used to generate a stable split of the training and test sets.
