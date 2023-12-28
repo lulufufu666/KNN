@@ -1,28 +1,3 @@
-# -
-玩一玩
-KNN Classifier for Target Prediction
-This project demonstrates the use of a k-nearest neighbors (KNN) classifier to predict a target variable in a dataset. The Python code uses the pandas, sklearn, and StandardScaler libraries to preprocess the data, split it into training and testing sets, and fit a KNN model to make predictions.
-
-Installation
-Clone the repository.
-
-Install the required dependencies using the following command:
-
-$ pip install pandas scikit-learn
-Usage
-Ensure that the train.csv dataset is available in the specified path.
-
-Execute the Python script and observe the accuracy of the KNN model on the testing set.
-
-Functionality
-The main functionalities of the provided code are as follows:
-
-Reading the dataset in chunks and preprocessing the data.
-Splitting the dataset into training and testing sets.
-Standardizing the features using StandardScaler.
-Fitting a KNN model to the training data and making predictions on the testing set.
-Evaluating the model’s performance using accuracy and generating a classification report.
-Usage Example
 # Replace 'D:\\train.csv' with the actual path to the dataset
 import pandas as pd
 from sklearn.metrics import roc_auc_score, classification_report
